@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "287642790040",
+    "project_id": "whats-appppp-saigen",
+    "storage_bucket": "whats-appppp-saigen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287642790040:android:ab12fad7f9f039089848ed",
+        "android_client_info": {
+          "package_name": "com.example.whatsapp_jiriki"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeX5sa5XO8EH1kVrobxu8gd0ghWCB5hnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
