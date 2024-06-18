@@ -5,7 +5,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:whatsapp_jiriki/common/utils/utils.dart';
 import 'package:whatsapp_jiriki/models/user_model.dart';
-import 'package:whatsapp_jiriki/screens/mobile_chat_screen.dart';
+import 'package:whatsapp_jiriki/features/chats/screens/mobile_chat_screen.dart';
 
 final selectContactsRepositoryProvider = Provider(
   (ref) => SelectsContactsRepository(firestore: FirebaseFirestore.instance),

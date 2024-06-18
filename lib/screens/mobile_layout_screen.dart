@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_jiriki/common/utils/colors.dart';
 import 'package:whatsapp_jiriki/features/select_contacts/screens/select_contacts_screen.dart';
-import 'package:whatsapp_jiriki/widgets/contacts_list.dart';
+import 'package:whatsapp_jiriki/features/chats/widgets/contacts_list.dart';
 
 class MobileLayoutScreen extends StatelessWidget {
   static const String routeName = '/mobile-layout-screen';
