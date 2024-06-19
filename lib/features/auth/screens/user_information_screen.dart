@@ -15,18 +15,13 @@ class UserInformationScreen extends ConsumerStatefulWidget {
 }
 
 class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
+
   final TextEditingController nameController = TextEditingController();
+  
   File? image;
 
-  // void selectPicked()async {
-  //   if(image != null) {
-  //     image = await  pickImageFromGallery(context);
-  //   }
-  //   setState(() {});
-  // }
-
   void selectPicked() async {
-    File? pickedImage = await pickImageFromGallery(context);
+    File? pickedImage = await pickImageFromGallery();
     if (pickedImage != null) {
       setState(() {
         image = pickedImage;
@@ -42,7 +37,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
           file: image,
         );
     }else{
-      showSnackBar(context: context, content: '名前を入力してください');
+      showSnackBar('名前を入力してください');
     }
     
   }

@@ -1,19 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_jiriki/common/utils/colors.dart';
+import 'package:whatsapp_jiriki/features/chats/controller/chat_controller.dart';
 
-class BottomChatField extends StatefulWidget {
+class BottomChatField extends ConsumerStatefulWidget {
+  final String recieverUserId;
   const BottomChatField({
     super.key,
+    required this.recieverUserId,
   });
 
   @override
-  State<BottomChatField> createState() => _BottomChatFieldState();
+  ConsumerState<BottomChatField> createState() => _BottomChatFieldState();
 }
 
-class _BottomChatFieldState extends State<BottomChatField> {
+class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   final TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool isShowSendButton = false;
+
+  void sendTextMessage() {
+    ref.read(chatControllerProvider).sendTextMessage(
+          context: context,
+          text: controller.text,
+          recieverUserId: widget.recieverUserId,
+        );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,16 +42,16 @@ class _BottomChatFieldState extends State<BottomChatField> {
             focusNode: focusNode,
             controller: controller,
             onChanged: (val) {
-                  if (val.isNotEmpty) {
-                    setState(() {
-                      isShowSendButton = true;
-                    });
-                  } else {
-                    setState(() {
-                      isShowSendButton = false;
-                    });
-                  }
-                },
+              if (val.isNotEmpty) {
+                setState(() {
+                  isShowSendButton = true;
+                });
+              } else {
+                setState(() {
+                  isShowSendButton = false;
+                });
+              }
+            },
             decoration: InputDecoration(
               filled: true,
               fillColor: mobileChatBoxColor,
@@ -98,12 +117,18 @@ class _BottomChatFieldState extends State<BottomChatField> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 5,left: 5),
+          padding: const EdgeInsets.only(top: 5, left: 5),
           child: CircleAvatar(
-            backgroundColor: const Color(0xFF128C7E),
-            radius: 25,
-            child: isShowSendButton ? const Icon(Icons.send) :const Icon(Icons.mic)
-          ),
+              backgroundColor: const Color(0xFF128C7E),
+              radius: 25,
+              child: IconButton(
+                  onPressed: () {
+                    sendTextMessage();
+                    controller.clear();
+                  },
+                  icon: isShowSendButton
+                      ? const Icon(Icons.send)
+                      : const Icon(Icons.mic))),
         )
       ],
     );

@@ -29,10 +29,9 @@ class SelectsContactsRepository {
     return contacts;
   }
 
-  void selectContacts({
-    required BuildContext context,
-    required Contact selectedContact,
-  }) async {
+  void selectContacts(
+    Contact selectedContact,
+  ) async {
     try {
       QuerySnapshot<Map<String, dynamic>> userCollection =
           await firestore.collection('users').get();
@@ -44,8 +43,7 @@ class SelectsContactsRepository {
             selectedContact.phones[0].number.replaceAll(' ', '');
         if (userData.phoneNumber == selectedPhoneNum) {
           isFound = true;
-          Navigator.pushNamed(
-            context,
+          navigatorKey.currentState?.pushNamed(
             MobileChatScreen.routeName,
             arguments: {
               'name': userData.name,
@@ -56,14 +54,12 @@ class SelectsContactsRepository {
       }
       if (!isFound) {
         showSnackBar(
-          context: context,
-          content: 'This number does not exist on this app.',
+         'This number does not exist on this app.',
         );
       }
     } catch (e) {
       showSnackBar(
-        context: context,
-        content: e.toString(),
+       e.toString(),
       );
     }
   }

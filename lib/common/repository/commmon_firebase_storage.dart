@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final commonFirebaseStorageRepositoryProvider = Provider(
   (ref) => CommonFirebaseStorageRepository(
-      firebaseStorage: FirebaseStorage.instance),
+    firebaseStorage: FirebaseStorage.instance,
+  ),
 );
 
 class CommonFirebaseStorageRepository {

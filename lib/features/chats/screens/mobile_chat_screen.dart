@@ -37,8 +37,11 @@ class MobileChatScreen extends ConsumerWidget {
                   name,
                 ),
                 Text(
-                  snapshot.data!.isOnline ? 'online' : 'offline',
-                  style: const TextStyle(
+                  snapshot.data!.isOnline 
+                  ? 'online' 
+                  : 'offline',
+                  style: TextStyle(
+                    color: snapshot.data!.isOnline ? Colors.green : Colors.red,
                     fontSize: 13,
                     fontWeight: FontWeight.normal,
                   ),
@@ -65,12 +68,12 @@ class MobileChatScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: ChatList(),
+           Expanded(
+            child: ChatList(recieverUserId: uid,),
           ),
            Padding(
              padding: const EdgeInsets.all(15.0),
-             child: BottomChatField(),
+             child: BottomChatField(recieverUserId: uid,),
            ),
           
         ],

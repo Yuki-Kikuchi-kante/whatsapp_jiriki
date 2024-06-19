@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_jiriki/common/utils/colors.dart';
+import 'package:whatsapp_jiriki/common/utils/utils.dart';
 import 'package:whatsapp_jiriki/common/widgets/error.dart';
 import 'package:whatsapp_jiriki/common/widgets/loader.dart';
 import 'package:whatsapp_jiriki/features/auth/controller/auth_controller.dart';
@@ -24,6 +25,8 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+        navigatorKey: navigatorKey,
+        scaffoldMessengerKey: scaffoldKey,
         onGenerateRoute: (settings) => generateRoute(settings),
         debugShowCheckedModeBanner: false,
         title: 'Whatsapp UI',
@@ -41,8 +44,6 @@ class MyApp extends ConsumerWidget {
               error: (err,str) => ErrorScreen(error: err.toString(),),
               loading: ()=> const Loader(),
             )
-        //const LandingScreen()
-        //const MobileLayoutScreen(),
         );
   }
 }

@@ -7,11 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_jiriki/features/auth/repository/auth_repository.dart';
 import 'package:whatsapp_jiriki/models/user_model.dart';
 
-
-final getCurrentUserProvider = FutureProvider((ref){
+final getCurrentUserProvider = FutureProvider((ref) {
   final authController = ref.watch(authControllerProvider);
   return authController.getCurrentUser();
-
 });
 
 final authControllerProvider = Provider((ref) {
@@ -30,8 +28,8 @@ class AuthController {
     required this.ref,
   });
 
-  Future<UserModel?> getCurrentUser()async{
-    UserModel? user = await  authRepository.getcurrentUser();
+  Future<UserModel?> getCurrentUser() async {
+    UserModel? user = await authRepository.getcurrentUser();
     return user;
   }
 
@@ -41,7 +39,6 @@ class AuthController {
     required File? file,
   }) {
     authRepository.saveUserData(
-      context: context,
       name: name,
       file: file,
       ref: ref,
@@ -54,21 +51,22 @@ class AuthController {
     required String smsCode,
   }) {
     authRepository.otpSend(
-      context: context,
       verificationId: verificationId,
       smsCode: smsCode,
     );
   }
 
-  void sendPhoneNumber(
-      {required String phoneNumber, required BuildContext context}) {
+  void sendPhoneNumber(String phoneNumber) {
     authRepository.sendPhoneNumber(
-      phoneNumber: phoneNumber,
-      context: context,
+      phoneNumber,
     );
   }
 
   Stream<UserModel> userDataById(String userId) {
     return authRepository.userData(userId);
+  }
+
+  void setState(bool isOnline) {
+    authRepository.setState(isOnline);
   }
 }

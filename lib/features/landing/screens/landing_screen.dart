@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_jiriki/common/utils/colors.dart';
+import 'package:whatsapp_jiriki/common/utils/utils.dart';
 import 'package:whatsapp_jiriki/common/widgets/custom_button.dart';
 import 'package:whatsapp_jiriki/features/auth/screens/login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
-  const LandingScreen({Key? key}) : super(key: key);
+  const LandingScreen({super.key});
 
-  void navigateToLoginScreen(BuildContext context) {
-    Navigator.pushNamed(context, LoginScreen.routeName);
+  void navigateToLoginScreen() {
+    navigatorKey.currentState?.pushNamed(LoginScreen.routeName);
   }
 
   @override
@@ -48,7 +49,7 @@ class LandingScreen extends StatelessWidget {
               width: size.width * 0.75,
               child: CustomButton(
                 text: 'AGREE AND CONTINUE',
-                onPressed: () => navigateToLoginScreen(context),
+                onPressed: () => navigateToLoginScreen(),
               ),
             ),
           ],

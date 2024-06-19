@@ -1,16 +1,22 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void showSnackBar({required BuildContext context, required String content}) {
-  ScaffoldMessenger.of(context).showSnackBar(
+final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+void showSnackBar(String content) {
+  ScaffoldMessengerState scaffoldMessangerState = scaffoldKey.currentState!;
+  scaffoldMessangerState.showSnackBar(
     SnackBar(
       content: Text(content),
     ),
   );
 }
 
-Future<File?> pickImageFromGallery(BuildContext context) async {
+Future<File?> pickImageFromGallery() async {
   File? imageTemp;
   try {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -18,7 +24,7 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
       imageTemp = File(image.path);
     }
   } catch (e) {
-    showSnackBar(context: context, content: e.toString());
+    showSnackBar(e.toString());
   }
   return imageTemp;
 }

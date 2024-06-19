@@ -6,7 +6,6 @@ import 'package:whatsapp_jiriki/common/utils/utils.dart';
 import 'package:whatsapp_jiriki/common/widgets/custom_button.dart';
 import 'package:whatsapp_jiriki/features/auth/controller/auth_controller.dart';
 
-
 class LoginScreen extends ConsumerStatefulWidget {
   static const routeName = '/login-screen';
   const LoginScreen({super.key});
@@ -30,17 +29,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  void sendPhoneNumber(){
-   String phoneNumber = controller.text.trim();
-   if(country != null && phoneNumber.isNotEmpty){
-    ref.read(authControllerProvider).sendPhoneNumber(
-          phoneNumber: '+${country!.phoneCode}$phoneNumber',
-          context: context,
-        );
-   }else{
-    showSnackBar(context: context, content: '空欄を埋めてください');
-   }
-    
+  void sendPhoneNumber() {
+    String phoneNumber = controller.text.trim();
+    if (country != null && phoneNumber.isNotEmpty) {
+      ref.read(authControllerProvider).sendPhoneNumber(
+            '+${country!.phoneCode}$phoneNumber',
+          );
+    } else {
+      showSnackBar('空欄を埋めてください');
+    }
   }
 
   @override

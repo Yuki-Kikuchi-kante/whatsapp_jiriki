@@ -35,8 +35,9 @@ class SelectContactsScreen extends ConsumerWidget {
                   final contact = contactList[index];
                   return InkWell(
                     onTap: () {
-                      ref.read(selectContactsControllerProvider).selectContacts(
-                          context: context, selectedContact: contact);
+                      ref
+                          .read(selectContactsControllerProvider)
+                          .selectContacts(contact);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),

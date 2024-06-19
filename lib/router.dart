@@ -11,37 +11,37 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case LoginScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
+        builder: (_) => const LoginScreen(),
       );
     case OTPScreen.routeName:
       String verificationId = settings.arguments as String;
       return MaterialPageRoute(
-        builder: (context) => OTPScreen(
+        builder: (_) => OTPScreen(
           verificationId: verificationId,
         ),
       );
       case UserInformationScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const UserInformationScreen(),
+        builder: (_) => const UserInformationScreen(),
       );
       case MobileLayoutScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const MobileLayoutScreen(),
+        builder: (_) => const MobileLayoutScreen(),
       );
       case SelectContactsScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const SelectContactsScreen(),
+        builder: (_) => const SelectContactsScreen(),
       );
       case MobileChatScreen.routeName:
       Map<String,dynamic> userData = settings.arguments as Map<String,dynamic>;
       final String name = userData['name'];
       final String uid = userData['uid'];
       return MaterialPageRoute(
-        builder: (context) =>  MobileChatScreen(name: name, uid: uid,),
+        builder: (_) =>  MobileChatScreen(name: name, uid: uid,),
       );
     default:
       return MaterialPageRoute(
-        builder: (context) => const Scaffold(
+        builder: (_) => const Scaffold(
           body: ErrorScreen(error: 'ページが見つかりません'),
         ),
       );

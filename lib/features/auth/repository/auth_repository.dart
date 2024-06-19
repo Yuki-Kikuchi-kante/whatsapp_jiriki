@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_jiriki/common/repository/commmon_firebase_storage.dart';
 import 'package:whatsapp_jiriki/common/utils/utils.dart';
@@ -28,18 +25,18 @@ class AuthRepository {
     required this.firestore,
   });
 
-  Future<UserModel?> getcurrentUser()async{
+  Future<UserModel?> getcurrentUser() async {
     UserModel? user;
-    DocumentSnapshot<Map<String, dynamic>> snap = await firestore.collection('users').doc(auth.currentUser?.uid).get();
-    if(snap.data() != null) {
+    DocumentSnapshot<Map<String, dynamic>> snap =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    if (snap.data() != null) {
       user = UserModel.fromMap(snap.data()!);
     }
     return user;
   }
 
   void saveUserData(
-      {required BuildContext context,
-      required String name,
+      {required String name,
       required File? file,
       required ProviderRef ref}) async {
     try {
@@ -65,18 +62,16 @@ class AuthRepository {
           .doc(auth.currentUser!.uid)
           .set(userData.toMap());
 
-      Navigator.pushNamedAndRemoveUntil(
-        context,
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
         MobileLayoutScreen.routeName,
         (route) => false,
       );
     } catch (e) {
-      showSnackBar(context: context, content: e.toString());
+      showSnackBar(e.toString());
     }
   }
 
   void otpSend({
-    required BuildContext context,
     required String verificationId,
     required String smsCode,
   }) async {
@@ -86,20 +81,18 @@ class AuthRepository {
         smsCode: smsCode,
       );
       await auth.signInWithCredential(credential);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
         UserInformationScreen.routeName,
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      showSnackBar(e.message!);
     }
   }
 
-  void sendPhoneNumber({
-    required String phoneNumber,
-    required BuildContext context,
-  }) async {
+  void sendPhoneNumber(
+    String phoneNumber,
+  ) async {
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
@@ -110,8 +103,7 @@ class AuthRepository {
           throw Exception(e.message);
         },
         codeSent: (String verificationId, int? resendToken) async {
-          await Navigator.pushNamed(
-            context,
+          await navigatorKey.currentState?.pushNamed(
             OTPScreen.routeName,
             arguments: verificationId,
           );
@@ -119,13 +111,20 @@ class AuthRepository {
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      showSnackBar(e.message!);
     }
   }
 
-  Stream<UserModel> userData(String uid){
-    return firestore.collection('users').doc(uid).snapshots().map((doc){
-    return UserModel.fromMap(doc.data()!);
+  Stream<UserModel> userData(String uid) {
+    return firestore.collection('users').doc(uid).snapshots().map((doc) {
+      return UserModel.fromMap(doc.data()!);
     });
+  }
+
+  void setState(bool isOnline) async {
+    await firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .update({'isOnline': isOnline});
   }
 }
